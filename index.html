@@ -1,12 +1,94 @@
-<!DOCTYPE html>
-<html><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Atlas Returns Dashboard</title>
-<link rel="stylesheet" href="style.css">
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Atlas Returns & Differences Dashboard">
+  <title>Atlas Returns & Differences</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header class="top"><img src="logo.png" class="logo"><div><h1>Atlas Returns Dashboard</h1><p>Returns & Differences</p></div></header>
-<section class="toolbar"><input id="search" placeholder="Search..."></section>
-<div class="tablewrap"><table id="tbl"><thead></thead><tbody></tbody></table></div>
-<script src="script.js"></script>
-</body></html>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
+  <header class="site-header">
+    <div class="brand">
+      <img src="logo.png" alt="Atlas logo" class="brand-logo">
+      <div>
+        <p class="eyebrow">Operations Portal</p>
+        <h1>Returns &amp; Differences</h1>
+      </div>
+    </div>
+    <div class="header-actions">
+      <span class="live-dot"><i></i> Live data</span>
+      <button class="icon-button" id="themeToggle" aria-label="Toggle dark mode">☾</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Atlas Dashboard</p>
+        <h2>Track cashback returns with clarity.</h2>
+        <p class="hero-copy">Search, filter and review payment differences from one clean dashboard.</p>
+      </div>
+      <button class="primary-button" id="exportBtn">Export filtered CSV</button>
+    </section>
+
+    <section class="stats-grid" aria-label="Summary">
+      <article class="stat-card">
+        <span class="stat-icon">↺</span>
+        <div><p>Total records</p><strong id="totalRecords">0</strong></div>
+      </article>
+      <article class="stat-card">
+        <span class="stat-icon">⌛</span>
+        <div><p>Pending</p><strong id="pendingRecords">0</strong></div>
+      </article>
+      <article class="stat-card">
+        <span class="stat-icon">✓</span>
+        <div><p>Completed</p><strong id="completedRecords">0</strong></div>
+      </article>
+      <article class="stat-card">
+        <span class="stat-icon">$</span>
+        <div><p>Total amount</p><strong id="totalAmount">$0.00</strong></div>
+      </article>
+    </section>
+
+    <section class="panel">
+      <div class="panel-toolbar">
+        <div class="search-wrap">
+          <span>⌕</span>
+          <input id="searchInput" type="search" placeholder="Search any field…" autocomplete="off">
+        </div>
+        <select id="statusFilter" aria-label="Filter by status">
+          <option value="">All statuses</option>
+        </select>
+        <button class="secondary-button" id="clearBtn">Clear filters</button>
+      </div>
+
+      <div class="table-scroll">
+        <table id="dataTable">
+          <thead></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div class="panel-footer">
+        <p id="resultCount">Showing 0 records</p>
+        <p class="hint">Click a row to view details</p>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="detailsDialog">
+    <div class="dialog-head">
+      <div><p class="eyebrow">Record details</p><h3>Return information</h3></div>
+      <button id="closeDialog" class="icon-button" aria-label="Close">×</button>
+    </div>
+    <div id="detailGrid" class="detail-grid"></div>
+  </dialog>
+
+  <footer>Atlas Returns &amp; Differences · Hosted free with GitHub Pages</footer>
+  <script src="script.js"></script>
+</body>
+</html>
