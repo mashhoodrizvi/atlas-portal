@@ -186,6 +186,7 @@ async function load() {
     filter.innerHTML = '<option value="">All statuses</option>';
     [...new Set(records.map(row => row.Status).filter(Boolean))].sort().forEach(status => {
       const option = document.createElement("option");
+      
       option.value = status;
       option.textContent = status;
       filter.appendChild(option);
