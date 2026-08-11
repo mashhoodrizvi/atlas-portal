@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#991f2a" />
+    <title>Atlas Quotation Builder</title>
+    <meta
+      name="description"
+      content="Create professional shower re-tiling quotations and download them as PDF."
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="brand-wrap">
+        <img class="brand-logo" src="logo.png" alt="Atlas Tiling and Bathroom Renovations" />
+        <div class="brand-copy">
+          <span class="eyebrow">Atlas operations</span>
+          <h1>Quotation Builder</h1>
+        </div>
+      </div>
+      <div class="header-badge">
+        <span class="status-dot"></span>
+        Ready to create
+      </div>
+    </header>
+
+    <main class="page-shell">
+      <section class="intro-card">
+        <div>
+          <span class="section-kicker">Shower re-tiling</span>
+          <h2>Create a clear, professional quote.</h2>
+          <p>
+            Add the customer, select only the required work, enter quantity and price,
+            then download the completed quotation as a PDF.
+          </p>
+        </div>
+        <div class="step-row" aria-label="Quotation steps">
+          <span><b>1</b> Customer</span>
+          <span><b>2</b> Select work</span>
+          <span><b>3</b> Download PDF</span>
+        </div>
+      </section>
+
+      <form id="quoteForm" novalidate>
+        <section class="form-card" aria-labelledby="customerHeading">
+          <div class="card-heading">
+            <div>
+              <span class="section-number">01</span>
+              <div>
+                <p class="section-label">Quote information</p>
+                <h3 id="customerHeading">Customer details</h3>
+              </div>
+            </div>
+            <span class="required-note">* Required fields</span>
+          </div>
+
+          <div class="field-grid">
+            <label class="field">
+              <span>Quotation number *</span>
+              <input id="quoteNumber" type="text" placeholder="e.g. 02515" autocomplete="off" />
+            </label>
+            <label class="field">
+              <span>Quotation date *</span>
+              <input id="quoteDate" type="date" />
+            </label>
+            <label class="field field-wide">
+              <span>Customer name *</span>
+              <input id="customerName" type="text" placeholder="Customer full name" autocomplete="name" />
+            </label>
+            <label class="field">
+              <span>Mobile number</span>
+              <input id="customerPhone" type="tel" placeholder="04xx xxx xxx" autocomplete="tel" />
+            </label>
+            <label class="field">
+              <span>Email</span>
+              <input id="customerEmail" type="email" placeholder="customer@email.com" autocomplete="email" />
+            </label>
+            <label class="field field-full">
+              <span>Site address</span>
+              <input id="customerAddress" type="text" placeholder="Street, suburb, state and postcode" autocomplete="street-address" />
+            </label>
+          </div>
+        </section>
+
+        <section class="form-card" aria-labelledby="itemsHeading">
+          <div class="card-heading item-heading">
+            <div>
+              <span class="section-number">02</span>
+              <div>
+                <p class="section-label">Scope of work</p>
+                <h3 id="itemsHeading">Select required items</h3>
+              </div>
+            </div>
+            <div class="mini-actions">
+              <button id="selectAllBtn" class="text-button" type="button">Select all</button>
+              <button id="clearItemsBtn" class="text-button muted" type="button">Clear</button>
+            </div>
+          </div>
+
+          <div class="items-header" aria-hidden="true">
+            <span>Use</span>
+            <span>Work description</span>
+            <span>Quantity</span>
+            <span>Unit price</span>
+            <span>Amount</span>
+          </div>
+          <div id="itemsList" class="items-list"></div>
+          <div class="add-item-panel">
+            <button id="addItemBtn" class="add-item-button" type="button">
+              <span aria-hidden="true">+</span>
+              Add more item
+            </button>
+            <p>Add another optional item with its own name, description, quantity and price.</p>
+          </div>
+          <p class="items-help">Only selected items will appear in the PDF quotation.</p>
+        </section>
+
+        <section class="form-card" aria-labelledby="summaryHeading">
+          <div class="card-heading">
+            <div>
+              <span class="section-number">03</span>
+              <div>
+                <p class="section-label">Final details</p>
+                <h3 id="summaryHeading">Notes and totals</h3>
+              </div>
+            </div>
+          </div>
+
+          <div class="final-grid">
+            <div class="notes-column">
+              <label class="field">
+                <span>Supply included</span>
+              <textarea id="supplyNote" rows="3">Adhesive, sand, cement, primer, waterproof membrane and floor waste are included in the quote.</textarea>
+              </label>
+              <label class="field">
+                <span>Additional notes</span>
+                <textarea id="additionalNotes" rows="4" placeholder="Add any special conditions or job notes"></textarea>
+              </label>
+            </div>
+
+            <aside class="totals-card" aria-live="polite">
+              <div class="total-line">
+                <span>Selected items</span>
+                <strong id="selectedCount">0</strong>
+              </div>
+              <div class="total-line">
+                <span>Subtotal</span>
+                <strong id="subtotalDisplay">$0.00</strong>
+              </div>
+              <label class="total-option">
+                <span>
+                  <input id="includeGst" type="checkbox" checked />
+                  Add GST (10%)
+                </span>
+                <strong id="gstDisplay">$0.00</strong>
+              </label>
+              <div class="total-line grand-total">
+                <span>Total</span>
+                <strong id="totalDisplay">$0.00</strong>
+              </div>
+              <label class="deposit-row">
+                <span>Deposit required</span>
+                <span class="deposit-input"><input id="depositPercent" type="number" min="0" max="100" step="1" value="10" />%</span>
+              </label>
+              <div class="total-line deposit-total">
+                <span>Deposit amount</span>
+                <strong id="depositDisplay">$0.00</strong>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <div id="formMessage" class="form-message" role="alert" hidden></div>
+
+        <div class="action-bar">
+          <button id="resetBtn" class="secondary-button" type="button">Clear quotation</button>
+          <button id="downloadBtn" class="primary-button" type="submit">
+            <span class="download-icon">↓</span>
+            <span>Download quotation PDF</span>
+          </button>
+        </div>
+      </form>
+    </main>
+
+    <footer class="app-footer">
+      <span>Atlas Tiling &amp; Bathroom Renovations</span>
+      <span>Perfection is our standard</span>
+    </footer>
+
+    <section id="pdfDocument" class="pdf-document" aria-hidden="true">
+      <div class="pdf-page">
+        <div class="pdf-accent"></div>
+        <header class="pdf-header">
+          <img src="logo.png" alt="Atlas Tiling and Bathroom Renovations" />
+          <div class="pdf-business">
+            <h2>QUOTATION</h2>
+            <strong>Atlas Tiling</strong>
+            <span>Licence: CPC 31311</span>
+            <span>Insurance: 2674838</span>
+            <span>ABN: 72 353 120 200</span>
+            <span>Mill Point Rd, South Perth WA 6152</span>
+          </div>
+        </header>
+
+        <div class="pdf-meta">
+          <div><span>Date</span><strong id="pdfDate">—</strong></div>
+          <div><span>Quotation no.</span><strong id="pdfQuoteNumber">—</strong></div>
+        </div>
+
+        <div class="pdf-customer">
+          <div class="pdf-block-title">Prepared for</div>
+          <strong id="pdfCustomerName">—</strong>
+          <span id="pdfCustomerPhone"></span>
+          <span id="pdfCustomerEmail"></span>
+          <span id="pdfCustomerAddress"></span>
+        </div>
+
+        <div class="pdf-scope-title">
+          <span>Scope of work</span>
+          <strong>Shower re-tiling</strong>
+        </div>
+
+        <table class="pdf-table">
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>Description</th>
+              <th>Qty</th>
+              <th>Unit price</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody id="pdfItems"></tbody>
+        </table>
+
+        <div class="pdf-after-table">
+          <div class="pdf-notes">
+            <div class="pdf-note-block">
+              <strong>Supply included</strong>
+              <p id="pdfSupplyNote"></p>
+            </div>
+            <div id="pdfExtraNoteBlock" class="pdf-note-block" hidden>
+              <strong>Additional notes</strong>
+              <p id="pdfAdditionalNotes"></p>
+            </div>
+          </div>
+
+          <div class="pdf-totals">
+            <div><span>Subtotal</span><strong id="pdfSubtotal">$0.00</strong></div>
+            <div id="pdfGstRow"><span>GST (10%)</span><strong id="pdfGst">$0.00</strong></div>
+            <div class="pdf-grand"><span>Total</span><strong id="pdfTotal">$0.00</strong></div>
+            <div><span id="pdfDepositLabel">Deposit (10%)</span><strong id="pdfDeposit">$0.00</strong></div>
+          </div>
+        </div>
+
+        <div class="pdf-terms">
+          <h3>TERMS AND CONDITIONS</h3>
+          <ul>
+            <li>If the quote is accepted, then 10% deposit will be required before commencement of work.</li>
+            <li>Removal of waste is either by Client or as agreed by quotation only with the Company.</li>
+            <li>Any changes or additions will be charges accordingly.</li>
+            <li>Final payment must be paid within 2 days after completion of work.</li>
+            <li>All materials remain the property of Atlas Tiling until Final Invoice is paid.</li>
+            <li>Prices in this quotation is valid for a period of 30 days from the date of quotation.</li>
+            <li>If a client wishes to cancel the project before the job commences, please note that the deposit paid will not be refundable. The deposit serves as a security of booking and covers any preliminary expenses incurred by our company, such as securing materials, scheduling contractors, and reserving the necessary resources for the project.</li>
+          </ul>
+        </div>
+
+        <footer class="pdf-footer">
+          <div>
+            <strong>Payment details</strong>
+            <span>Bank: NAB</span>
+            <span>BSB: 086-479</span>
+            <span>Account: 146577347</span>
+          </div>
+          <div>
+            <strong>Sam</strong>
+            <span>Mobile: 0450 418 618</span>
+            <span>Email: atlastiling@live.com.au</span>
+            <span>Web: atlasbathroomrenovations.com.au</span>
+          </div>
+          <p>PERFECTION IS OUR STANDARD</p>
+        </footer>
+      </div>
+    </section>
+
+    <script src="jspdf.umd.min.js"></script>
+    <script src="jspdf.plugin.autotable.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
